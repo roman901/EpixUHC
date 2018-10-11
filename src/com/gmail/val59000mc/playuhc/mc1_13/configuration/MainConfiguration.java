@@ -194,7 +194,7 @@ public class MainConfiguration {
 
 			// Potions effects on start
 			List<String> potionStrList = cfg.getStringList("potion-effect-on-start");
-			List<PotionEffect> potionList = new ArrayList<>();
+			List<PotionEffect> potionList = new ArrayList<PotionEffect>();
 			if(potionStrList == null){
 				potionEffectOnStart = potionList;
 			}else{
@@ -214,7 +214,7 @@ public class MainConfiguration {
 
 			// Mobs gold drops
 			List<String> mobsGoldDrop = cfg.getStringList("customize-game-behavior.add-gold-drops.affected-mobs");
-			List<EntityType> mobsType = new ArrayList<>();
+			List<EntityType> mobsType = new ArrayList<EntityType>();
 			if(mobsGoldDrop != null){
 				for(String mobTypeString : mobsGoldDrop){
 					try{
@@ -231,14 +231,14 @@ public class MainConfiguration {
 			// Seed list
 			List<Long> choosenSeed = cfg.getLongList("world-seeds.list");
 			if(choosenSeed == null)
-				seeds = new ArrayList<>();
+				seeds = new ArrayList<Long>();
 			else
 				seeds = choosenSeed;
 
 
 			// World list
 			List<String> worldList = cfg.getStringList("world-list.list");
-			worldsList = (worldList == null) ? new ArrayList<>() : worldList;
+			worldsList = (worldList == null) ? new ArrayList<String>() : worldList;
 
 
 			// Fast Mode
@@ -269,13 +269,29 @@ public class MainConfiguration {
 			enableBlockLoots = cfg.getBoolean("fast-mode.block-loot.enable",false);
 			blockLoots = new HashMap<>();
 			ConfigurationSection allBlockLootsSection = cfg.getConfigurationSection("fast-mode.block-loot.loots");
-			configureLoot(allBlockLootsSection);
+            if(allBlockLootsSection != null){
+                for(String mobLootSectionName : allBlockLootsSection.getKeys(false)){
+                    ConfigurationSection mobLootSection = allBlockLootsSection.getConfigurationSection(mobLootSectionName);
+                    BlockLootConfiguration mobLootConfig = new BlockLootConfiguration();
+                    if(mobLootConfig.parseConfiguration(mobLootSection)){
+                        blockLoots.put(mobLootConfig.getMaterial(),mobLootConfig);
+                    }
+                }
+            }
 
 			// Fast Mode, mob-loot
 			enableMobLoots = cfg.getBoolean("fast-mode.mob-loot.enable",false);
 			mobLoots = new HashMap<>();
 			ConfigurationSection allMobLootsSection = cfg.getConfigurationSection("fast-mode.mob-loot.loots");
-			configureLoot(allMobLootsSection);
+            if(allMobLootsSection != null){
+                for(String mobLootSectionName : allMobLootsSection.getKeys(false)){
+                    ConfigurationSection mobLootSection = allMobLootsSection.getConfigurationSection(mobLootSectionName);
+                    MobLootConfiguration mobLootConfig = new MobLootConfiguration();
+                    if(mobLootConfig.parseConfiguration(mobLootSection)){
+                        mobLoots.put(mobLootConfig.getEntityType(),mobLootConfig);
+                    }
+                }
+            }
 
 
 			// custom events
@@ -290,18 +306,6 @@ public class MainConfiguration {
 			// Dependencies
 			loadWorldEdit();
 		}
-
-	private void configureLoot(ConfigurationSection allMobLootsSection) {
-		if(allMobLootsSection != null){
-			for(String mobLootSectionName : allMobLootsSection.getKeys(false)){
-				ConfigurationSection mobLootSection = allMobLootsSection.getConfigurationSection(mobLootSectionName);
-				BlockLootConfiguration mobLootConfig = new BlockLootConfiguration();
-				if(mobLootConfig.parseConfiguration(mobLootSection)){
-					blockLoots.put(mobLootConfig.getMaterial(),mobLootConfig);
-				}
-			}
-		}
-	}
 
 	private void loadWorldEdit() {
 			Plugin wePlugin = Bukkit.getPluginManager().getPlugin("WorldEdit");
