@@ -19,4 +19,3 @@ commands:
         description: "Type '/teleport <player>' to teleport to your teammates while spectating"
         usage: "/teleport <player>"
         permissionMessage: "You don't have the permission to use PlayUHC commands"
-        aliases: [tp]

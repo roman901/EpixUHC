@@ -1,5 +1,6 @@
 package org.uwtech.epix.playuhc.game;
 
+import org.bukkit.entity.Player;
 import org.uwtech.epix.playuhc.PlayUhc;
 import org.uwtech.epix.playuhc.commands.ChatCommandExecutor;
 import org.uwtech.epix.playuhc.commands.TeleportCommandExecutor;
@@ -7,6 +8,7 @@ import org.uwtech.epix.playuhc.commands.UhcCommandExecutor;
 import org.uwtech.epix.playuhc.configuration.MainConfiguration;
 import org.uwtech.epix.playuhc.customitems.CraftsManager;
 import org.uwtech.epix.playuhc.customitems.KitsManager;
+import org.uwtech.epix.playuhc.exceptions.UhcPlayerNotOnlineException;
 import org.uwtech.epix.playuhc.languages.Lang;
 import org.uwtech.epix.playuhc.listeners.*;
 import org.uwtech.epix.playuhc.maploader.MapLoader;
@@ -206,6 +208,14 @@ public class GameManager {
 		worldBorder.startBorderThread();
 	}
 
+	public void broadcastTitle(String title, String subtitle) {
+		for(UhcPlayer player : getPlayersManager().getPlayersList()){
+            try {
+                player.getPlayer().sendTitle(title, subtitle);
+            } catch (UhcPlayerNotOnlineException e) {
+            }
+        }
+	}
 	public void broadcastMessage(String message) {
 		for(UhcPlayer player : getPlayersManager().getPlayersList()){
 			player.sendMessage(message);
@@ -285,7 +295,7 @@ public class GameManager {
 	}
 
 	public void endGame() {
-		if(gameState.equals(GameState.PLAYING) || gameState.equals(GameState.DEATHMATCH)){
+		if(gameState.equals(GameState.PLAYING)){
 			setGameState(GameState.ENDED);
 			pvp = false;
 			gameIsEnding = true;

@@ -37,26 +37,21 @@ public class EndThread implements Runnable{
 	public void run() {
 		
 		if(run){
-			Bukkit.getScheduler().runTask(PlayUhc.getPlugin(), new Runnable() {
-				
-				@Override
-				public void run(){ 
-					GameManager gm = GameManager.getGameManager();
-						
-					if(timeBeforeEnd <= 0){
-						gm.endGame();
-					}else{
-						if(timeBeforeEnd > 0 && (timeBeforeEnd%10 == 0 || timeBeforeEnd <= 5)){
-							Bukkit.getLogger().info(Lang.DISPLAY_MESSAGE_PREFIX+" "+ Lang.PLAYERS_ALL_HAVE_LEFT+" "+timeBeforeEnd);
-							gm.broadcastInfoMessage(Lang.PLAYERS_ALL_HAVE_LEFT+" "+timeBeforeEnd);
-						}
-						timeBeforeEnd--;
-						Bukkit.getScheduler().runTaskLaterAsynchronously(PlayUhc.getPlugin(), EndThread.this,20);
+			Bukkit.getScheduler().runTask(PlayUhc.getPlugin(), () -> {
+				GameManager gm = GameManager.getGameManager();
+
+				if(timeBeforeEnd <= 0){
+					gm.endGame();
+				}else{
+					if(timeBeforeEnd % 10 == 0 || timeBeforeEnd <= 5){
+						Bukkit.getLogger().info(Lang.DISPLAY_MESSAGE_PREFIX+" "+ Lang.PLAYERS_ALL_HAVE_LEFT+" "+timeBeforeEnd);
+						gm.broadcastInfoMessage(Lang.PLAYERS_ALL_HAVE_LEFT+" "+timeBeforeEnd);
 					}
+					timeBeforeEnd--;
+					Bukkit.getScheduler().runTaskLaterAsynchronously(PlayUhc.getPlugin(), EndThread.this,20);
 				}
 			});
 		}
 		
 	}
-
 }

@@ -265,24 +265,23 @@ public class PlayersManager {
 	
 
 	public void setAllPlayersEndGame() {
-
 		GameManager gm = GameManager.getGameManager();
 		MainConfiguration cfg = gm.getConfiguration();
 		
 		List<UhcPlayer> winners = getWinners();
 		for(UhcPlayer player : winners){
 			gm.broadcastInfoMessage(Lang.PLAYERS_WON.replace("%player%", ChatColor.GOLD+player.getName()));
+			gm.broadcastTitle(ChatColor.GREEN+"UHC закончен!", "Победитель: "+ChatColor.GOLD+player.getName());
 		}
 		
 		// send to bungee
-
 		if(cfg.getEnableBungeeSupport() && cfg.getTimeBeforeSendBungeeAfterEnd() >= 0){
 			for(UhcPlayer player : getPlayersList()){
 				Bukkit.getScheduler().runTaskAsynchronously(PlayUhc.getPlugin(), new TimeBeforeSendBungeeThread(player, cfg.getTimeBeforeSendBungeeAfterEnd()));
 			}
 		}
 		
-		UhcWinEvent event = new UhcWinEvent(new HashSet<UhcPlayer>(winners));
+		UhcWinEvent event = new UhcWinEvent(new HashSet<>(winners));
 		Bukkit.getServer().getPluginManager().callEvent(event);
 
 		for(UhcPlayer player : getPlayersList()){
