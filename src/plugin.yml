@@ -1,5 +1,5 @@
 name: PlayUHC
-main: com.gmail.val59000mc.playuhc.PlayUhc
+main: PlayUhc
 version: 1.9.4
 description: Automates UHC games on a dedicated server
 author: val59000mc, Mezy, Roman901
