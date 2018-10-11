@@ -108,7 +108,6 @@ public class MainConfiguration {
 
 		// dependencies
 		private boolean worldEditLoaded;
-		private boolean vaultLoaded;
 
 
 		public void load(FileConfiguration cfg){
@@ -187,7 +186,7 @@ public class MainConfiguration {
 			if(enableTimeLimit){
 				GameManager.getGameManager().setRemainingTime(timeLimit);
 			}else{
-				if(endWithDeathmatch == true){
+				if(endWithDeathmatch){
 					Bukkit.getLogger().info("[PlayUHC] end-with-deathmatch-after-time-limit is set to false because there is no time-limit.");
 					disableEndWithDeathmatch();
 				}
@@ -195,7 +194,7 @@ public class MainConfiguration {
 
 			// Potions effects on start
 			List<String> potionStrList = cfg.getStringList("potion-effect-on-start");
-			List<PotionEffect> potionList = new ArrayList<PotionEffect>();
+			List<PotionEffect> potionList = new ArrayList<>();
 			if(potionStrList == null){
 				potionEffectOnStart = potionList;
 			}else{
@@ -215,7 +214,7 @@ public class MainConfiguration {
 
 			// Mobs gold drops
 			List<String> mobsGoldDrop = cfg.getStringList("customize-game-behavior.add-gold-drops.affected-mobs");
-			List<EntityType> mobsType = new ArrayList<EntityType>();
+			List<EntityType> mobsType = new ArrayList<>();
 			if(mobsGoldDrop != null){
 				for(String mobTypeString : mobsGoldDrop){
 					try{
@@ -232,14 +231,14 @@ public class MainConfiguration {
 			// Seed list
 			List<Long> choosenSeed = cfg.getLongList("world-seeds.list");
 			if(choosenSeed == null)
-				seeds = new ArrayList<Long>();
+				seeds = new ArrayList<>();
 			else
 				seeds = choosenSeed;
 
 
 			// World list
 			List<String> worldList = cfg.getStringList("world-list.list");
-			worldsList = (worldList == null) ? new ArrayList<String>() : worldList;
+			worldsList = (worldList == null) ? new ArrayList<>() : worldList;
 
 
 			// Fast Mode
@@ -254,7 +253,7 @@ public class MainConfiguration {
 
 			// Fast Mode, generate-vein
 			enableGenerateVein = cfg.getBoolean("fast-mode.generate-vein.enable",false);
-			generateVeins = new HashMap<Material,GenerateVeinConfiguration>();
+			generateVeins = new HashMap<>();
 			ConfigurationSection allVeinsSection = cfg.getConfigurationSection("fast-mode.generate-vein.veins");
 			if(allVeinsSection != null){
 				for(String veinSectionName : allVeinsSection.getKeys(false)){
@@ -268,31 +267,15 @@ public class MainConfiguration {
 
 			// Fast Mode, block-loot
 			enableBlockLoots = cfg.getBoolean("fast-mode.block-loot.enable",false);
-			blockLoots = new HashMap<Material,BlockLootConfiguration>();
+			blockLoots = new HashMap<>();
 			ConfigurationSection allBlockLootsSection = cfg.getConfigurationSection("fast-mode.block-loot.loots");
-			if(allBlockLootsSection != null){
-				for(String blockLootSectionName : allBlockLootsSection.getKeys(false)){
-					ConfigurationSection blockLootSection = allBlockLootsSection.getConfigurationSection(blockLootSectionName);
-					BlockLootConfiguration blockLootConfig = new BlockLootConfiguration();
-					if(blockLootConfig.parseConfiguration(blockLootSection)){
-						blockLoots.put(blockLootConfig.getMaterial(),blockLootConfig);
-					}
-				}
-			}
-			
+			configureLoot(allBlockLootsSection);
+
 			// Fast Mode, mob-loot
 			enableMobLoots = cfg.getBoolean("fast-mode.mob-loot.enable",false);
-			mobLoots = new HashMap<EntityType,MobLootConfiguration>();
+			mobLoots = new HashMap<>();
 			ConfigurationSection allMobLootsSection = cfg.getConfigurationSection("fast-mode.mob-loot.loots");
-			if(allMobLootsSection != null){
-				for(String mobLootSectionName : allMobLootsSection.getKeys(false)){
-					ConfigurationSection mobLootSection = allMobLootsSection.getConfigurationSection(mobLootSectionName);
-					BlockLootConfiguration mobLootConfig = new BlockLootConfiguration();
-					if(mobLootConfig.parseConfiguration(mobLootSection)){
-						blockLoots.put(mobLootConfig.getMaterial(),mobLootConfig);
-					}
-				}
-			}
+			configureLoot(allMobLootsSection);
 
 
 			// custom events
@@ -308,8 +291,19 @@ public class MainConfiguration {
 			loadWorldEdit();
 		}
 
+	private void configureLoot(ConfigurationSection allMobLootsSection) {
+		if(allMobLootsSection != null){
+			for(String mobLootSectionName : allMobLootsSection.getKeys(false)){
+				ConfigurationSection mobLootSection = allMobLootsSection.getConfigurationSection(mobLootSectionName);
+				BlockLootConfiguration mobLootConfig = new BlockLootConfiguration();
+				if(mobLootConfig.parseConfiguration(mobLootSection)){
+					blockLoots.put(mobLootConfig.getMaterial(),mobLootConfig);
+				}
+			}
+		}
+	}
 
-		private void loadWorldEdit() {
+	private void loadWorldEdit() {
 			Plugin wePlugin = Bukkit.getPluginManager().getPlugin("WorldEdit");
 	        if(!(wePlugin instanceof WorldEditPlugin)) {
 	            Bukkit.getLogger().warning("[PlayUHC] WorldEdit plugin not found, there will be no support of schematics.");
@@ -378,10 +372,6 @@ public class MainConfiguration {
 
 		public boolean getWorldEditLoaded() {
 			return worldEditLoaded;
-		}
-
-		public boolean getVaultLoaded() {
-			return vaultLoaded;
 		}
 
 		public int getMinPlayersToStart() {

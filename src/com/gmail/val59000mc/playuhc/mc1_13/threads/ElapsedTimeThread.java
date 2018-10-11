@@ -24,8 +24,6 @@ public class ElapsedTimeThread implements Runnable{
 	public ElapsedTimeThread() {
 		this.gm = GameManager.getGameManager();
 		this.task = this;
-		this.enableTimeEvent = gm.getConfiguration().getEnableTimeEvent();
-		this.intervalTimeEvent = gm.getConfiguration().getIntervalTimeEvent();
 		this.reward = gm.getConfiguration().getRewardTimeEvent();
 	}
 	
@@ -42,27 +40,6 @@ public class ElapsedTimeThread implements Runnable{
 			// Call time event
 			UhcTimeEvent event = new UhcTimeEvent(playingPlayers,intervalTimeEvent,time);
 			Bukkit.getServer().getPluginManager().callEvent(event);
-			
-			if(enableTimeEvent){
-				
-				String message = Lang.EVENT_TIME_REWARD
-						.replace("%time%", TimeUtils.getFormattedTime(intervalTimeEvent))
-						.replace("%totaltime%", TimeUtils.getFormattedTime(time))
-						.replace("%money%", ""+reward);
-				
-				for(UhcPlayer uhcP : playingPlayers){
-					
-					try {
-						Player p = uhcP.getPlayer();
-						VaultManager.addMoney(p, reward);
-						if(!message.isEmpty()){
-							p.sendMessage(message);
-						}
-					} catch (UhcPlayerNotOnlineException e) {
-						// Tignore offline players
-					}
-				}
-			}
 		}
 		
 		if(!gm.getGameState().equals(GameState.ENDED)){
