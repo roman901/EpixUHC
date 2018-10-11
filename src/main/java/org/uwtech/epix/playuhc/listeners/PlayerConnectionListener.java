@@ -53,19 +53,13 @@ public class PlayerConnectionListener implements Listener{
 	
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onPlayerJoin(final PlayerJoinEvent event){
-		Bukkit.getScheduler().runTaskLater(PlayUhc.getPlugin(), new Runnable() {
-			
-			@Override
-			public void run() {
-				GameManager.getGameManager().getPlayersManager().playerJoinsTheGame(event.getPlayer());
-			}
-		}, 1);
-		
+		Bukkit.getScheduler().runTaskLater(PlayUhc.getPlugin(), () -> GameManager.getGameManager().getPlayersManager().playerJoinsTheGame(event.getPlayer()), 1);
+
 	}
-	
-	
-	
-	
+
+
+
+
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onPlayerDisconnect(PlayerQuitEvent event){
 			if(getKickedPlayersWhileJoining().contains(event.getPlayer().getName())){
@@ -83,18 +77,16 @@ public class PlayerConnectionListener implements Listener{
 						gm.getPlayersManager().strikeLightning(uhcPlayer);
 					}
 					uhcPlayer.getTeam().leave(uhcPlayer);
-				}catch (UhcPlayerDoesntExistException e) {
-				}catch (UhcTeamException e1) {
+				}catch (UhcPlayerDoesntExistException | UhcTeamException e) {
 				}
-				
+
 				if(uhcPlayer != null)
 					gm.getPlayersManager().getPlayersList().remove(uhcPlayer);
 			}
 			
 			if(gm.getGameState().equals(GameState.PLAYING) || gm.getGameState().equals(GameState.DEATHMATCH)){
-				UhcPlayer uhcPlayer = null;
 				try {
-					uhcPlayer = gm.getPlayersManager().getUhcPlayer(event.getPlayer());
+					UhcPlayer uhcPlayer = gm.getPlayersManager().getUhcPlayer(event.getPlayer());
 					if(gm.getConfiguration().getEnableKillDisconnectedPlayers() && uhcPlayer.getState().equals(PlayerState.PLAYING)){
 						Bukkit.getScheduler().runTaskLaterAsynchronously(PlayUhc.getPlugin(), new KillDisconnectedPlayerThread(event.getPlayer().getName()),1);
 					}

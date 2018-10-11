@@ -37,8 +37,6 @@ public class PlayersManager {
 	}
 	
 	public boolean isPlayerAllowedToJoin(Player player) throws UhcPlayerJoinException {
-		
-		
 		GameManager uhcGM = GameManager.getGameManager();
 		UhcPlayer uhcPlayer;
 		switch(uhcGM.getGameState()){
