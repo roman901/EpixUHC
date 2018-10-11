@@ -1,7 +1,6 @@
 package com.gmail.val59000mc.playuhc.mc1_13.threads;
 
 import com.gmail.val59000mc.playuhc.PlayUhc;
-import com.gmail.val59000mc.playuhc.mc1_13.configuration.VaultManager;
 import com.gmail.val59000mc.playuhc.mc1_13.events.UhcTimeEvent;
 import com.gmail.val59000mc.playuhc.mc1_13.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.playuhc.mc1_13.game.GameManager;

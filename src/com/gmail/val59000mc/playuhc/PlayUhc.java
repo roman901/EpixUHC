@@ -3,8 +3,7 @@ package com.gmail.val59000mc.playuhc;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class PlayUhc extends JavaPlugin{
-	
+public class PlayUhc extends JavaPlugin {
 	private static PlayUhc pl;
 	private static int version = 0;
 
@@ -17,26 +16,13 @@ public class PlayUhc extends JavaPlugin{
 		saveDefaultConfig();
 
 		loadServerVersion();
-		addBStats();
 		
-		Bukkit.getScheduler().runTaskLater(this, new Runnable(){
-			
-			@Override
-			public void run() {
-
-			    if (version < 13) {
-                    new com.gmail.val59000mc.playuhc.mc1_8.game.GameManager().loadNewGame();
-                }else {
-                    new com.gmail.val59000mc.playuhc.mc1_13.game.GameManager().loadNewGame();
-                }
-				
-				// Unlock players joins and rely on UhcPlayerJoinListener
-				Bukkit.getServer().setWhitelist(false);
-			}
-			
+		Bukkit.getScheduler().runTaskLater(this, () -> {
+			new com.gmail.val59000mc.playuhc.mc1_13.game.GameManager().loadNewGame();
+			// Unlock players joins and rely on UhcPlayerJoinListener
+			Bukkit.getServer().setWhitelist(false);
 		}, 1);
-		
-		
+
 	}
 
 	private void loadServerVersion(){
@@ -56,10 +42,6 @@ public class PlayUhc extends JavaPlugin{
 		}else {
 			Bukkit.getLogger().info("[PlayUHC] 1." + version + " Server detected!");
 		}
-	}
-
-	private void addBStats(){
-		new Metrics(this);
 	}
 
 	public static int getVersion() {

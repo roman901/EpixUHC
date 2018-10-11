@@ -2,7 +2,6 @@ package com.gmail.val59000mc.playuhc.mc1_13.players;
 
 import com.gmail.val59000mc.playuhc.PlayUhc;
 import com.gmail.val59000mc.playuhc.mc1_13.configuration.MainConfiguration;
-import com.gmail.val59000mc.playuhc.mc1_13.configuration.VaultManager;
 import com.gmail.val59000mc.playuhc.mc1_13.customitems.KitsManager;
 import com.gmail.val59000mc.playuhc.mc1_13.customitems.UhcItems;
 import com.gmail.val59000mc.playuhc.mc1_13.events.UhcWinEvent;

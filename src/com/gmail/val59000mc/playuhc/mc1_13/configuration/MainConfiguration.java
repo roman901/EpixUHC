@@ -3,7 +3,6 @@ package com.gmail.val59000mc.playuhc.mc1_13.configuration;
 import com.gmail.val59000mc.playuhc.PlayUhc;
 import com.gmail.val59000mc.playuhc.mc1_13.game.GameManager;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import net.milkbowl.vault.Vault;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -307,14 +306,12 @@ public class MainConfiguration {
 
 			// Dependencies
 			loadWorldEdit();
-			loadVault();
-			VaultManager.setupEconomy();
 		}
 
 
 		private void loadWorldEdit() {
 			Plugin wePlugin = Bukkit.getPluginManager().getPlugin("WorldEdit");
-	        if(wePlugin == null || !(wePlugin instanceof WorldEditPlugin)) {
+	        if(!(wePlugin instanceof WorldEditPlugin)) {
 	            Bukkit.getLogger().warning("[PlayUHC] WorldEdit plugin not found, there will be no support of schematics.");
 	            worldEditLoaded = false;
 	        }else {
@@ -322,19 +319,6 @@ public class MainConfiguration {
 	        	worldEditLoaded = true;
 	        }
 		}
-
-		private void loadVault(){
-			Plugin vault = Bukkit.getPluginManager().getPlugin("Vault");
-	        if(vault == null || !(vault instanceof Vault)) {
-	        	 Bukkit.getLogger().warning("[PlayUHC] Vault plugin not found, there will be no support of economy rewards.");
-	        	 vaultLoaded = false;
-	        }else{
-	        	 Bukkit.getLogger().warning("[PlayUHC] Hooked with Vault plugin.");
-	        	 vaultLoaded = true;
-	        }
-		}
-
-
 
 		public boolean getForceAssignSoloPlayerToTeamWhenStarting() {
 			return forceAssignSoloPlayerToTeamWhenStarting;
