@@ -2,7 +2,6 @@ package org.uwtech.epix.playuhc.configuration;
 
 import org.uwtech.epix.playuhc.PlayUhc;
 import org.uwtech.epix.playuhc.game.GameManager;
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -60,9 +59,6 @@ public class MainConfiguration {
 		private boolean banLevelTwoPotions;
 		private boolean alwaysDay;
 		private boolean borderIsMoving;
-		private boolean endWithDeathmatch;
-		private int arenaPasteAtY;
-		private Material deathmatchTeleportSpotBLock;
 		private boolean regenHeadDropOnPlayerDeath;
 		private boolean allowGhastTearsDrops;
 		private Sound soundOnPlayerDeath;
@@ -128,8 +124,6 @@ public class MainConfiguration {
 			enableTimeLimit = cfg.getBoolean("time-limit.enable",false);
 			timeLimit = cfg.getLong("time-limit.limit",timeToShrink);
 			borderIsMoving = cfg.getBoolean("border.moving",false);
-			endWithDeathmatch = cfg.getBoolean("time-limit.end-with-deathmatch-after-time-limit",false);
-			arenaPasteAtY = cfg.getInt("time-limit.paste-arena-at-y",100);
 			regenHeadDropOnPlayerDeath = cfg.getBoolean("customize-game-behavior.add-regen-head-drop-on-player-death",true);
 			allowGhastTearsDrops = cfg.getBoolean("customize-game-behavior.allow-ghast-tears-drops",true);
 			autoAssignNewPlayerTeam = cfg.getBoolean("auto-assign-new-player-team",false);
@@ -156,27 +150,14 @@ public class MainConfiguration {
 				soundOnPlayerDeath = null;
 			}
 
-			// Arena spot block
-			String spotBlock = cfg.getString("time-limit.deathmatch-teleport-spots-block","BEDROCK");
-			try{
-				deathmatchTeleportSpotBLock = Material.valueOf(spotBlock);
-			}catch(IllegalArgumentException e){
-				deathmatchTeleportSpotBLock = Material.BEDROCK;
-			}
-
 			// Set remaining time
 			if(enableTimeLimit){
 				GameManager.getGameManager().setRemainingTime(timeLimit);
-			}else{
-				if(endWithDeathmatch){
-					Bukkit.getLogger().info("[PlayUHC] end-with-deathmatch-after-time-limit is set to false because there is no time-limit.");
-					disableEndWithDeathmatch();
-				}
 			}
 
 			// Potions effects on start
 			List<String> potionStrList = cfg.getStringList("potion-effect-on-start");
-			List<PotionEffect> potionList = new ArrayList<PotionEffect>();
+			List<PotionEffect> potionList = new ArrayList<>();
 			if(potionStrList == null){
 				potionEffectOnStart = potionList;
 			}else{
@@ -196,7 +177,7 @@ public class MainConfiguration {
 
 			// Mobs gold drops
 			List<String> mobsGoldDrop = cfg.getStringList("customize-game-behavior.add-gold-drops.affected-mobs");
-			List<EntityType> mobsType = new ArrayList<EntityType>();
+			List<EntityType> mobsType = new ArrayList<>();
 			if(mobsGoldDrop != null){
 				for(String mobTypeString : mobsGoldDrop){
 					try{
@@ -213,14 +194,14 @@ public class MainConfiguration {
 			// Seed list
 			List<Long> choosenSeed = cfg.getLongList("world-seeds.list");
 			if(choosenSeed == null)
-				seeds = new ArrayList<Long>();
+				seeds = new ArrayList<>();
 			else
 				seeds = choosenSeed;
 
 
 			// World list
 			List<String> worldList = cfg.getStringList("world-list.list");
-			worldsList = (worldList == null) ? new ArrayList<String>() : worldList;
+			worldsList = (worldList == null) ? new ArrayList<>() : worldList;
 
 
 			// Fast Mode
@@ -530,14 +511,6 @@ public class MainConfiguration {
 			return borderIsMoving;
 		} 
 
-		public boolean getEndWithDeathmatch() {
-			return endWithDeathmatch;
-		} 
-
-		public Material getDeathmatchTeleportSpotBLock() {
-			return deathmatchTeleportSpotBLock;
-		} 
-
 		public int getTimeBeforeStartWhenReady() {
 			return timeBeforeStartWhenReady;
 		} 
@@ -552,10 +525,6 @@ public class MainConfiguration {
 
 		public Sound getSoundOnPlayerDeath() {
 			return soundOnPlayerDeath;
-		}
-
-		public void disableEndWithDeathmatch() {
-			endWithDeathmatch = false;
 		}
 
 		public void setOverworldUuid(String uuid) {

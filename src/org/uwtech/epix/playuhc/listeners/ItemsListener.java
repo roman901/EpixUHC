@@ -1,7 +1,7 @@
 package org.uwtech.epix.playuhc.listeners;
 
 import org.uwtech.epix.playuhc.PlayUhc;
-import com.gmail.val59000mc.playuhc.customitems.*;
+import org.uwtech.epix.playuhc.customitems.*;
 import org.uwtech.epix.playuhc.exceptions.UhcPlayerDoesntExistException;
 import org.uwtech.epix.playuhc.exceptions.UhcPlayerNotOnlineException;
 import org.uwtech.epix.playuhc.exceptions.UhcTeamException;
@@ -28,7 +28,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.BrewerInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.uwtech.epix.playuhc.customitems.*;
 
 public class ItemsListener implements Listener {
 

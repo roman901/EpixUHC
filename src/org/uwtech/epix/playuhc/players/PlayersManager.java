@@ -239,8 +239,7 @@ public class PlayersManager {
 		
 	}
 
-	public void setPlayerSpectateAtLobby(UhcPlayer uhcPlayer){
-		
+	public void setPlayerSpectateAtLobby(UhcPlayer uhcPlayer) {
 		uhcPlayer.setState(PlayerState.DEAD);
 		uhcPlayer.sendMessage(ChatColor.GREEN+ Lang.DISPLAY_MESSAGE_PREFIX
 				+" "
@@ -258,16 +257,10 @@ public class PlayersManager {
 			{
 			    player.removePotionEffect(effect.getType());
 			}
-			if(GameManager.getGameManager().getGameState().equals(GameState.DEATHMATCH)){
-				player.teleport(GameManager.getGameManager().getArena().getLoc());
-			}else{
-				player.teleport(GameManager.getGameManager().getLobby().getLoc());
-			}
+			player.teleport(GameManager.getGameManager().getLobby().getLoc());
 		} catch (UhcPlayerNotOnlineException e) {
 			// Do nothing beacause DEAD is a safe state
 		}
-		
-		
 	}
 	
 
@@ -426,16 +419,15 @@ public class PlayersManager {
 	}
 
 	public void strikeLightning(UhcPlayer uhcPlayer) {
-		try{
+		try {
 			Location loc = uhcPlayer.getPlayer().getLocation();
 			loc.getWorld().strikeLightningEffect(loc);
 			loc.getWorld().getBlockAt(loc).setType(Material.AIR);
-		}catch(UhcPlayerNotOnlineException e){
+		} catch (UhcPlayerNotOnlineException e) {
 			Location loc = GameManager.getGameManager().getLobby().getLoc();
 			loc.getWorld().strikeLightningEffect(loc);
 			loc.getWorld().getBlockAt(loc).setType(Material.AIR);
 		}
-
 		// Extinguish fire
 	}
 
@@ -496,10 +488,7 @@ public class PlayersManager {
 		
 		GameManager gm = GameManager.getGameManager();
 		if(gm.getConfiguration().getEnableTimeLimit() && gm.getRemainingTime() <= 0 && gm.getGameState().equals(GameState.PLAYING)){
-			if(gm.getConfiguration().getEndWithDeathmatch())
-				gm.startDeathmatch();
-			else
-				gm.endGame();
+			gm.endGame();
 		} else if(playingPlayers == 0){
 			gm.endGame();
 		}else if(playingPlayers>0 && playingPlayersOnline == 0){
@@ -540,32 +529,7 @@ public class PlayersManager {
 		player.sendPluginMessage(PlayUhc.getPlugin(), "BungeeCord", out.toByteArray());
 	}
 
-	public void setAllPlayersStartDeathmatch() {
-		
-		List<Location> spots = GameManager.getGameManager().getArena().getTeleportSpots();
-
-		int spotIndex = 0;
-		
-		for(UhcTeam teams : listUhcTeams()){
-			for(UhcPlayer player : teams.getMembers()){
-				try{
-					Player bukkitPlayer = player.getPlayer();
-					if(player.getState().equals(PlayerState.PLAYING))
-						bukkitPlayer.setGameMode(GameMode.ADVENTURE);
-					bukkitPlayer.teleport(spots.get(spotIndex));
-				}catch(UhcPlayerNotOnlineException e){
-					// Do nothing for offline players
-				}
-			}
-			spotIndex++;
-			if(spotIndex==spots.size())
-				spotIndex = 0;
-		}
-		
-	}
-
 	public void playSoundPlayerDeath() {
-
 		Sound sound = GameManager.getGameManager().getConfiguration().getSoundOnPlayerDeath();
 		if(sound != null){
 			for(Player player : Bukkit.getOnlinePlayers()){

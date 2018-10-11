@@ -21,13 +21,8 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 public class PlayerDeathListener implements Listener {
 
-	private boolean enableKillEvent;
-	private double reward;
-	
 	public PlayerDeathListener(){
 		GameManager gm = GameManager.getGameManager();
-		this.enableKillEvent = gm.getConfiguration().getEnableKillEvent();
-		this.reward = gm.getConfiguration().getRewardKillEvent();
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -47,12 +42,6 @@ public class PlayerDeathListener implements Listener {
 				if(killer != null){
 					killEvent = new UHCPlayerKillEvent(uhcPlayer, pm.getUhcPlayer(player.getKiller()));
 					Bukkit.getServer().getPluginManager().callEvent(killEvent);
-					if(enableKillEvent){
-						VaultManager.addMoney(killer, reward);
-						if(!Lang.EVENT_KILL_REWARD.isEmpty()){
-							killer.sendMessage(Lang.EVENT_KILL_REWARD.replace("%money%", ""+reward));
-						}
-					}
 				}
 				
 				
