@@ -3,7 +3,6 @@ main: com.gmail.val59000mc.playuhc.PlayUhc
 version: 1.9.4
 description: Automates UHC games on a dedicated server
 author: val59000mc, Mezy, Roman901
-soft-depend: [WorldEdit]
 api-version: 1.13
 commands:
    playuhc:

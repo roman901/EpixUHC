@@ -194,16 +194,5 @@ bungee-support:
   send-players-to-server-after-end: lobby
   time-before-send-after-death: 0
   time-before-send-after-end: 0
-custom-events:
-  time:
-    enable: false
-    reward: 100
-    interval: 600
-  kill:
-    enable: false
-    reward: 500
-  win:
-    enable: false
-    reward: 1000
 debug: false
   
