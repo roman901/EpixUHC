@@ -12,9 +12,7 @@ import com.gmail.val59000mc.playuhc.mc1_13.listeners.*;
 import com.gmail.val59000mc.playuhc.mc1_13.maploader.MapLoader;
 import com.gmail.val59000mc.playuhc.mc1_13.players.PlayersManager;
 import com.gmail.val59000mc.playuhc.mc1_13.players.UhcPlayer;
-import com.gmail.val59000mc.playuhc.mc1_13.schematics.DeathmatchArena;
 import com.gmail.val59000mc.playuhc.mc1_13.schematics.Lobby;
-import com.gmail.val59000mc.playuhc.mc1_13.schematics.UndergroundNether;
 import com.gmail.val59000mc.playuhc.mc1_13.sounds.SoundManager;
 import com.gmail.val59000mc.playuhc.mc1_13.sounds.UhcSound;
 import com.gmail.val59000mc.playuhc.mc1_13.threads.*;
@@ -32,7 +30,6 @@ import java.util.List;
 public class GameManager {
 	private GameState gameState;
 	private Lobby lobby;
-	private DeathmatchArena arena;
 	private PlayersManager playerManager;
 	private MapLoader mapLoader;
 	private UhcWorldBorder worldBorder;
@@ -88,10 +85,6 @@ public class GameManager {
 
 	public Lobby getLobby() {
 		return lobby;
-	}
-
-	public DeathmatchArena getArena() {
-		return arena;
 	}
 
 	public boolean getGameIsEnding() {
@@ -179,7 +172,7 @@ public class GameManager {
 
 	}
 
-	public void startWaitingPlayers(){
+	public void startWaitingPlayers() {
 		loadWorlds();
 		registerCommands();
 		gameState = GameState.WAITING;
@@ -187,7 +180,7 @@ public class GameManager {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(PlayUhc.getPlugin(), new PreStartThread(),0);
 	}
 
-	public void startGame(){
+	public void startGame() {
 		setGameState(GameState.STARTING);
 		if(!getConfiguration().getAlwaysDay())
 			Bukkit.getWorld(configuration.getOverworldUuid()).setGameRuleValue("doDaylightCycle", "true");
@@ -197,7 +190,7 @@ public class GameManager {
 		gameIsEnding = false;
 	}
 
-	public void startWatchingEndOfGame(){
+	public void startWatchingEndOfGame() {
 		gameState = GameState.PLAYING;
 
 		World overworld = Bukkit.getWorld(configuration.getOverworldUuid());
@@ -213,17 +206,17 @@ public class GameManager {
 		worldBorder.startBorderThread();
 	}
 
-	public void broadcastMessage(String message){
+	public void broadcastMessage(String message) {
 		for(UhcPlayer player : getPlayersManager().getPlayersList()){
 			player.sendMessage(message);
 		}
 	}
 
-	public void broadcastInfoMessage(String message){
+	public void broadcastInfoMessage(String message) {
 		broadcastMessage(ChatColor.GREEN+ Lang.DISPLAY_MESSAGE_PREFIX+" "+ChatColor.WHITE+message);
 	}
 
-	private void loadConfig(){
+	private void loadConfig() {
 		new Lang();
 
 		FileConfiguration cfg = PlayUhc.getPlugin().getConfig();
@@ -236,7 +229,7 @@ public class GameManager {
 		CraftsManager.loadBannedCrafts();
 	}
 
-	private void registerListeners(){
+	private void registerListeners() {
 		// Registers Listeners
 			List<Listener> listeners = new ArrayList<Listener>();
 			listeners.add(new PlayerConnectionListener());
@@ -254,7 +247,7 @@ public class GameManager {
 			}
 	}
 
-	private void loadWorlds(){
+	private void loadWorlds() {
 		World overworld = Bukkit.getWorld(configuration.getOverworldUuid());
 		overworld.save();
 		overworld.setGameRuleValue("naturalRegeneration", "false");
@@ -279,13 +272,6 @@ public class GameManager {
 		lobby.build();
 		lobby.loadLobbyChunks();
 
-		arena = new DeathmatchArena(new Location(overworld, 10000, configuration.getArenaPasteAtY(), 10000));
-		arena.build();
-		arena.loadChunks();
-
-		UndergroundNether undergoundNether = new UndergroundNether();
-		undergoundNether.build();
-
 		worldBorder.setUpBukkitBorder();
 
 		pvp = false;
@@ -307,29 +293,6 @@ public class GameManager {
 			getPlayersManager().playSoundToAll(UhcSound.ENDERDRAGON_GROWL, 1, 2);
 			getPlayersManager().setAllPlayersEndGame();
 			Bukkit.getScheduler().scheduleSyncDelayedTask(PlayUhc.getPlugin(), new StopRestartThread(),20);
-		}
-
-	}
-
-	public void startDeathmatch() {
-		if(gameState.equals(GameState.PLAYING)){
-			setGameState(GameState.DEATHMATCH);
-			pvp = false;
-			broadcastInfoMessage(Lang.GAME_START_DEATHMATCH);
-			getPlayersManager().playSoundToAll(UhcSound.ENDERDRAGON_GROWL);
-			Location arenaLocation = getArena().getLoc();
-
-			//Set big border size to avoid hurting players
-			getWorldBorder().setBukkitWorldBorderSize(arenaLocation.getWorld(), arenaLocation.getBlockX(), arenaLocation.getBlockZ(), 50000);
-
-			// Teleport players
-			getPlayersManager().setAllPlayersStartDeathmatch();
-
-			// Shrink border to arena size
-			getWorldBorder().setBukkitWorldBorderSize(arenaLocation.getWorld(), arenaLocation.getBlockX(), arenaLocation.getBlockZ(), getArena().getMaxSize());
-
-			// Start Enable pvp thread
-			Bukkit.getScheduler().scheduleSyncDelayedTask(PlayUhc.getPlugin(), new StartDeathmatchThread(),20);
 		}
 
 	}

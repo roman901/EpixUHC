@@ -80,24 +80,11 @@ public class MainConfiguration {
 		private int chunksPerTick;
 		private int restDuraton;
 		private boolean enablePregenerateWorld;
-		
-		// custom events
-		private boolean enableTimeEvent;
-		private double rewardTimeEvent;
-		private long intervalTimeEvent;
-		private boolean enableKillEvent;
-		private double rewardKillEvent;
-		private boolean enableWinEvent;
-		private double rewardWinEnvent;
-		
+
 		// fast mode
 		private boolean cookedDroppedFood;
 		private boolean treesAutoCut;
 		private boolean treesApplesOnEveryTreeType;
-		private boolean enableUndergroundNether;
-		private int netherPasteAtY;
-		private int minOccurrencesUndergroundNether;
-		private int maxOccurrencesUndergroundNether;
 		private boolean disableFallDamage;
 		private boolean enableGenerateVein;
 		private Map<Material,GenerateVeinConfiguration> generateVeins;
@@ -105,10 +92,6 @@ public class MainConfiguration {
 		private Map<Material,BlockLootConfiguration> blockLoots;
 		private boolean enableMobLoots;
 		private Map<EntityType,MobLootConfiguration> mobLoots;
-
-		// dependencies
-		private boolean worldEditLoaded;
-
 
 		public void load(FileConfiguration cfg){
 			minimalReadyTeamsPercentageToStart = cfg.getInt("minimal-ready-teams-percentage-to-start",50);
@@ -245,10 +228,6 @@ public class MainConfiguration {
 			cookedDroppedFood = cfg.getBoolean("fast-mode.cooked-dropped-food",false);
 			treesAutoCut = cfg.getBoolean("fast-mode.trees.auto-cut",false);
 			treesApplesOnEveryTreeType = cfg.getBoolean("fast-mode.trees.apples-on-every-tree-type",false);
-			enableUndergroundNether = cfg.getBoolean("fast-mode.underground-nether.enable",false);
-			netherPasteAtY =  cfg.getInt("fast-mode.underground-nether.paste-nether-at-y",20);
-			minOccurrencesUndergroundNether = cfg.getInt("fast-mode.underground-nether.min-ocurrences",5);
-			maxOccurrencesUndergroundNether = cfg.getInt("fast-mode.underground-nether.min-ocurrences",10);
 			disableFallDamage = cfg.getBoolean("fast-mode.disable-fall-damage",false);
 
 			// Fast Mode, generate-vein
@@ -292,30 +271,6 @@ public class MainConfiguration {
                     }
                 }
             }
-
-
-			// custom events
-			enableTimeEvent = cfg.getBoolean("custom-events.time.enable",false);
-			rewardTimeEvent = cfg.getDouble("custom-events.time.reward",0);
-			intervalTimeEvent = cfg.getLong("custom-events.time.interval",600);
-			enableKillEvent = cfg.getBoolean("custom-events.kill.enable",false);
-			rewardKillEvent = cfg.getDouble("custom-events.kill.reward");
-			enableWinEvent = cfg.getBoolean("custom-events.win.enable",false);
-			rewardWinEnvent = cfg.getDouble("custom-events.win.reward",0);
-
-			// Dependencies
-			loadWorldEdit();
-		}
-
-	private void loadWorldEdit() {
-			Plugin wePlugin = Bukkit.getPluginManager().getPlugin("WorldEdit");
-	        if(!(wePlugin instanceof WorldEditPlugin)) {
-	            Bukkit.getLogger().warning("[PlayUHC] WorldEdit plugin not found, there will be no support of schematics.");
-	            worldEditLoaded = false;
-	        }else {
-	        	 Bukkit.getLogger().warning("[PlayUHC] Hooked with WorldEdit plugin.");
-	        	worldEditLoaded = true;
-	        }
 		}
 
 		public boolean getForceAssignSoloPlayerToTeamWhenStarting() {
@@ -329,53 +284,6 @@ public class MainConfiguration {
 
 		public int getTimeBeforeSendBungeeAfterEnd() {
 			return timeBeforeSendBungeeAfterEnd;
-		}
-
-		public boolean getEnableTimeEvent() {
-			return enableTimeEvent;
-		}
-
-
-		public double getRewardTimeEvent() {
-			return rewardTimeEvent;
-		}
-
-
-		public long getIntervalTimeEvent() {
-			return intervalTimeEvent;
-		}
-
-
-		public boolean getEnableKillEvent() {
-			return enableKillEvent;
-		}
-
-
-		public double getRewardKillEvent() {
-			return rewardKillEvent;
-		}
-
-
-		public boolean getEnableWinEvent() {
-			return enableWinEvent;
-		}
-
-
-		public double getRewardWinEnvent() {
-			return rewardWinEnvent;
-		}
-
-
-		public int getNetherPasteAtY() {
-			return netherPasteAtY;
-		}
-
-		public int getArenaPasteAtY() {
-			return arenaPasteAtY;
-		}
-
-		public boolean getWorldEditLoaded() {
-			return worldEditLoaded;
 		}
 
 		public int getMinPlayersToStart() {
@@ -432,18 +340,6 @@ public class MainConfiguration {
 
 		public boolean getTreesApplesOnEveryTreeType() {
 			return treesApplesOnEveryTreeType;
-		}
-
-		public boolean getEnableUndergroundNether() {
-			return enableUndergroundNether;
-		}
-
-		public int getMinOccurrencesUndergroundNether() {
-			return minOccurrencesUndergroundNether;
-		}
-
-		public int getMaxOccurrencesUndergroundNether() {
-			return maxOccurrencesUndergroundNether;
 		}
 
 		public boolean getDisableFallDamage() {
