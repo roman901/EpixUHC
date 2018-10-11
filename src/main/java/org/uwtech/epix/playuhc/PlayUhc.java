@@ -38,7 +38,7 @@ public class PlayUhc extends JavaPlugin {
 		}
 
 		if (version == 0) {
-			version = 8;
+			version = 13;
 			Bukkit.getLogger().warning("[PlayUHC] Failed to detect server version! " + versionString + "?");
 		}else {
 			Bukkit.getLogger().info("[PlayUHC] 1." + version + " Server detected!");

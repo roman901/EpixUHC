@@ -31,7 +31,7 @@ public class SoundManager {
             if (PlayUhc.getVersion() < 9){
                 return "ENDERDRAGON_GROWL";
             }else {
-                return "ENTITY_ENDERDRAGON_GROWL";
+                return "ENTITY_ENDER_DRAGON_GROWL";
             }
         }
 
