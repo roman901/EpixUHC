@@ -13,3 +13,5 @@ This fork provides **as is** with no guarantees and responsibilities. We are **n
 * Removed Deathmatch arena
 * Removed schematic support (because it's format changed)
 * Add title about the winner at the end of the match
+* Fixed some gameplay bugs and crashes
+* Removed dead and deprecated code
