@@ -185,7 +185,7 @@ public class GameManager {
 	public void startGame() {
 		setGameState(GameState.STARTING);
 		if(!getConfiguration().getAlwaysDay())
-			Bukkit.getWorld(configuration.getOverworldUuid()).setGameRuleValue("doDaylightCycle", "true");
+			Bukkit.getWorld(configuration.getOverworldUuid()).setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
 		broadcastInfoMessage(Lang.GAME_STARTING);
 		broadcastInfoMessage(Lang.GAME_PLEASE_WAIT_TELEPORTING);
 		getPlayersManager().randomTeleportTeams();
@@ -272,10 +272,10 @@ public class GameManager {
 
 		World nether = Bukkit.getWorld(configuration.getNetherUuid());
 		nether.save();
-        overworld.setGameRule(GameRule.NATURAL_REGENERATION, false);
-        overworld.setGameRule(GameRule.COMMAND_BLOCK_OUTPUT, false);
-        overworld.setGameRule(GameRule.LOG_ADMIN_COMMANDS, false);
-        overworld.setGameRule(GameRule.SEND_COMMAND_FEEDBACK, false);
+		nether.setGameRule(GameRule.NATURAL_REGENERATION, false);
+		nether.setGameRule(GameRule.COMMAND_BLOCK_OUTPUT, false);
+		nether.setGameRule(GameRule.LOG_ADMIN_COMMANDS, false);
+		nether.setGameRule(GameRule.SEND_COMMAND_FEEDBACK, false);
 		nether.setDifficulty(Difficulty.HARD);
 
 		lobby = new Lobby(new Location(overworld, 0, 200, 0), Material.GLASS);

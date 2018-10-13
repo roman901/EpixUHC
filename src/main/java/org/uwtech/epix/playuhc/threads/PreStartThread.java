@@ -65,7 +65,7 @@ public class PreStartThread implements Runnable{
 				double percentageReadyTeams = 100*readyTeams/teamsNumber;
 				int playersNumber = Bukkit.getOnlinePlayers().size();
 				
-				if(force == true || (pause == false && (remainingTime < 5 || (playersNumber >= minPlayers && readyTeams >= gm.getConfiguration().getMinimalReadyTeamsToStart() && percentageReadyTeams >= gm.getConfiguration().getMinimalReadyTeamsPercentageToStart())))){
+				if(force || (!pause && (remainingTime < 5 || (playersNumber >= minPlayers && readyTeams >= gm.getConfiguration().getMinimalReadyTeamsToStart() && percentageReadyTeams >= gm.getConfiguration().getMinimalReadyTeamsPercentageToStart())))){
 						if(remainingTime == timeBeforeStart+1){
 							gm.broadcastInfoMessage(Lang.GAME_ENOUGH_TEAMS_READY);
 							gm.broadcastInfoMessage(Lang.GAME_STARTING_IN.replace("%time%", ""+ TimeUtils.getFormattedTime(remainingTime)));

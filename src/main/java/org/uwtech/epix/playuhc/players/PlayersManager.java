@@ -15,7 +15,6 @@ import org.uwtech.epix.playuhc.languages.Lang;
 import org.uwtech.epix.playuhc.sounds.UhcSound;
 import org.uwtech.epix.playuhc.threads.CheckRemainingPlayerThread;
 import org.uwtech.epix.playuhc.threads.TeleportPlayersThread;
-import org.uwtech.epix.playuhc.threads.TimeBeforeSendBungeeThread;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import org.bukkit.*;
@@ -270,13 +269,6 @@ public class PlayersManager {
 		for(UhcPlayer player : winners){
 			gm.broadcastInfoMessage(Lang.PLAYERS_WON.replace("%player%", ChatColor.GOLD+player.getName()));
 			gm.broadcastTitle(ChatColor.GREEN+"UHC закончен!", "Победитель: "+ChatColor.GOLD+player.getName());
-		}
-		
-		// send to bungee
-		if(cfg.getEnableBungeeSupport() && cfg.getTimeBeforeSendBungeeAfterEnd() >= 0){
-			for(UhcPlayer player : getPlayersList()){
-				Bukkit.getScheduler().runTaskAsynchronously(PlayUhc.getPlugin(), new TimeBeforeSendBungeeThread(player, cfg.getTimeBeforeSendBungeeAfterEnd()));
-			}
 		}
 		
 		UhcWinEvent event = new UhcWinEvent(new HashSet<>(winners));
