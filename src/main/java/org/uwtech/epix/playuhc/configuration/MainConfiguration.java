@@ -32,7 +32,6 @@ public class MainConfiguration {
 		private List<Long> seeds;
 		private boolean pickRandomWorldFromList;
 		private List<String> worldsList;
-		private boolean playingCompass;
 		private boolean spectatingTeleport;
 		private boolean enableKitsPermissions;
 		private boolean enableCraftsPermissions;
@@ -43,15 +42,10 @@ public class MainConfiguration {
 		private int maxGoldDrops;
 		private List<EntityType> affectedGoldDropsMobs;
 		private int goldDropPercentage;
-		private boolean auto20MinBroadcast;
 		private boolean enableExpDropOnDeath;
 		private int expDropOnDeath;
 		private boolean enableKillDisconnectedPlayers;
 		private int maxDisconnectPlayersTime;
-		private boolean enableBungeeSupport;
-		private String serverBungee;
-		private int timeBeforeSendBungeeAfterDeath;
-		private int timeBeforeSendBungeeAfterEnd;
 		private long timeToShrink;
 		private long timeLimit;
 		private boolean enableTimeLimit;
@@ -101,7 +95,6 @@ public class MainConfiguration {
 			netherUuid = cfg.getString("worlds.nether",null);
 			pickRandomSeedFromList = cfg.getBoolean("world-seeds.pick-random-seed-from-list",false);
 			pickRandomWorldFromList = cfg.getBoolean("world-list.pick-random-world-from-list",false);
-			playingCompass = cfg.getBoolean("playing-compass",true);
 			spectatingTeleport = cfg.getBoolean("spectating-teleport",false);
 			enableKitsPermissions = cfg.getBoolean("enable-kits-permissions",false);
 			enableCraftsPermissions = cfg.getBoolean("customize-game-behavior.enable-crafts-permissions",false);
@@ -111,15 +104,10 @@ public class MainConfiguration {
 			minGoldDrops = cfg.getInt("customize-game-behavior.add-gold-drops.min",0);
 			maxGoldDrops = cfg.getInt("customize-game-behavior.add-gold-drops.max",0);
 			goldDropPercentage = cfg.getInt("customize-game-behavior.add-gold-drops.drop-chance-percentage",0);
-			auto20MinBroadcast = cfg.getBoolean("auto-20-min-broadcast",false);
 			enableExpDropOnDeath = cfg.getBoolean("customize-game-behavior.add-xp-drops-on-player-death.enable",false);
 			expDropOnDeath = cfg.getInt("customize-game-behavior.add-xp-drops-on-player-death.quantity",0);
 			enableKillDisconnectedPlayers = cfg.getBoolean("kill-disconnected-players-after-delay.enable",false);
 			maxDisconnectPlayersTime = cfg.getInt("kill-disconnected-players-after-delay.delay",60);
-			enableBungeeSupport = cfg.getBoolean("bungee-support.enable",false);
-			serverBungee = cfg.getString("bungee-support.send-players-to-server-after-end","lobby");
-			timeBeforeSendBungeeAfterDeath = cfg.getInt("bungee-support.time-before-send-after-death",-1);
-			timeBeforeSendBungeeAfterEnd = cfg.getInt("bungee-support.time-before-send-after-end",-1);
 			timeToShrink = cfg.getLong("border.time-to-shrink",3600);
 			enableTimeLimit = cfg.getBoolean("time-limit.enable",false);
 			timeLimit = cfg.getLong("time-limit.limit",timeToShrink);
@@ -257,15 +245,6 @@ public class MainConfiguration {
 			return forceAssignSoloPlayerToTeamWhenStarting;
 		}
 
-
-		public int getTimeBeforeSendBungeeAfterDeath() {
-			return timeBeforeSendBungeeAfterDeath;
-		}
-
-		public int getTimeBeforeSendBungeeAfterEnd() {
-			return timeBeforeSendBungeeAfterEnd;
-		}
-
 		public int getMinPlayersToStart() {
 			return minPlayersToStart;
 		}
@@ -377,15 +356,9 @@ public class MainConfiguration {
 		public String getOverworldUuid() {
 			return overworldUuid;
 		}
-		
-		
+
 		public String getNetherUuid() {
 			return netherUuid;
-		}
-
-
-		public boolean getPlayingCompass() {
-			return playingCompass;
 		}
 
 		public boolean getSpectatingTeleport() {
@@ -447,10 +420,6 @@ public class MainConfiguration {
 			return maxPlayersPerTeam;
 		}
 
-		public boolean getAuto20MinBroadcast() {
-			return auto20MinBroadcast;
-		}
-
 		public boolean getEnableExpDropOnDeath() {
 			return enableExpDropOnDeath;
 		}
@@ -475,14 +444,6 @@ public class MainConfiguration {
 			return worldsList;
 		} 
 
-		public boolean getEnableBungeeSupport() {
-			return enableBungeeSupport;
-		} 
-
-		public String getServerBungee() {
-			return serverBungee;
-		}  
-		
 		public long getTimeToShrink() {
 			return timeToShrink;
 		} 

@@ -10,7 +10,6 @@ import org.uwtech.epix.playuhc.languages.Lang;
 import org.uwtech.epix.playuhc.players.PlayerState;
 import org.uwtech.epix.playuhc.players.PlayersManager;
 import org.uwtech.epix.playuhc.players.UhcPlayer;
-import org.uwtech.epix.playuhc.threads.TimeBeforeSendBungeeThread;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -58,9 +57,6 @@ public class PlayerDeathListener implements Listener {
 				pm.playSoundPlayerDeath();
 				if(!cfg.getCanSpectateAfterDeath()){
 					player.kickPlayer(Lang.DISPLAY_MESSAGE_PREFIX+" "+ Lang.KICK_DEAD);
-				}
-				if(cfg.getEnableBungeeSupport() && cfg.getTimeBeforeSendBungeeAfterDeath() >= 0){
-					Bukkit.getScheduler().runTaskAsynchronously(PlayUhc.getPlugin(), new TimeBeforeSendBungeeThread(uhcPlayer, cfg.getTimeBeforeSendBungeeAfterDeath()));
 				}
 				pm.checkIfRemainingPlayers();
 			}else{

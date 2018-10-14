@@ -1,9 +1,11 @@
-package org.uwtech.epix.playuhc.players;
+package org.uwtech.epix.playuhc.threads;
 
 import org.uwtech.epix.playuhc.PlayUhc;
 import org.uwtech.epix.playuhc.exceptions.UhcPlayerNotOnlineException;
 import org.uwtech.epix.playuhc.game.GameManager;
 import org.uwtech.epix.playuhc.languages.Lang;
+import org.uwtech.epix.playuhc.players.PlayerState;
+import org.uwtech.epix.playuhc.players.UhcPlayer;
 import org.uwtech.epix.playuhc.sounds.UhcSound;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

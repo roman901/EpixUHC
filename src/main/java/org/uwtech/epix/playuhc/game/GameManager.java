@@ -1,6 +1,5 @@
 package org.uwtech.epix.playuhc.game;
 
-import org.bukkit.entity.Player;
 import org.uwtech.epix.playuhc.PlayUhc;
 import org.uwtech.epix.playuhc.commands.ChatCommandExecutor;
 import org.uwtech.epix.playuhc.commands.TeleportCommandExecutor;
@@ -143,9 +142,6 @@ public class GameManager {
 			mapLoader.createNewWorld(Environment.NETHER);
 		}
 
-		if(getConfiguration().getEnableBungeeSupport())
-			PlayUhc.getPlugin().getServer().getMessenger().registerOutgoingPluginChannel(PlayUhc.getPlugin(), "BungeeCord");
-
 		if(getConfiguration().getEnablePregenerateWorld() && !getConfiguration().getDebug())
 			mapLoader.generateChunks(Environment.NORMAL);
 		else
@@ -153,7 +149,6 @@ public class GameManager {
 	}
 
 	private void deleteOldPlayersFiles() {
-
 		if(Bukkit.getServer().getWorlds().size()>0){
 			// Deleting old players files
 			File playerdata = new File(Bukkit.getServer().getWorlds().get(0).getName()+"/playerdata");
@@ -171,7 +166,6 @@ public class GameManager {
 				}
 			}
 		}
-
 	}
 
 	public void startWaitingPlayers() {
@@ -202,7 +196,6 @@ public class GameManager {
 		getPlayersManager().startWatchPlayerPlayingThread();
 		Bukkit.getScheduler().runTaskAsynchronously(PlayUhc.getPlugin(), new ElapsedTimeThread());
 		Bukkit.getScheduler().runTaskAsynchronously(PlayUhc.getPlugin(), new EnablePVPThread());
-		Bukkit.getScheduler().runTaskAsynchronously(PlayUhc.getPlugin(), new Auto20MinBroadcastThread());
 		if(getConfiguration().getEnableTimeLimit())
 			Bukkit.getScheduler().runTaskAsynchronously(PlayUhc.getPlugin(), new TimeBeforeEndThread());
 		worldBorder.startBorderThread();

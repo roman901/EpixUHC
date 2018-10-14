@@ -25,6 +25,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+import org.uwtech.epix.playuhc.threads.UpdateScoreboardThread;
 
 import java.util.*;
 
@@ -209,8 +210,6 @@ public class PlayersManager {
 				}
 				player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 1), false);
 				player.setGameMode(GameMode.SURVIVAL);
-				if(cfg.getPlayingCompass())
-					UhcItems.giveCompassPlayingTo(player);
 				if(cfg.getEnableExtraHalfHearts()){
 					player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20+((double) cfg.getExtraHalfHearts()));
 					player.setHealth(20+((double) cfg.getExtraHalfHearts()));
@@ -500,22 +499,11 @@ public class PlayersManager {
 	}
 
 	public void startWatchPlayerPlayingThread() {
-		
 		for(Player player : Bukkit.getOnlinePlayers()){
 			player.removePotionEffect(PotionEffectType.BLINDNESS);
 		}
 		
 		Bukkit.getScheduler().runTaskLaterAsynchronously(PlayUhc.getPlugin(), new CheckRemainingPlayerThread() , 40);
-		
-		
-	}
-	
-	public void sendPlayerToBungeeServer(Player player, String message) {
-		ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF("Connect");
-        out.writeUTF(GameManager.getGameManager().getConfiguration().getServerBungee());
-		player.sendMessage(message);
-		player.sendPluginMessage(PlayUhc.getPlugin(), "BungeeCord", out.toByteArray());
 	}
 
 	public void playSoundPlayerDeath() {
@@ -526,19 +514,4 @@ public class PlayersManager {
 			}
 		}
 	}
-
-	public Set<UhcPlayer> getPlayingPlayer() {
-		Set<UhcPlayer> playingPlayers = new HashSet<UhcPlayer>();
-		for(UhcPlayer p : getPlayersList()){
-			if(p.getState().equals(PlayerState.PLAYING) && p.isOnline()){
-				playingPlayers.add(p);
-			}
-		}
-		return playingPlayers;
-	}
-
-	
-	
-	
-	
 }
