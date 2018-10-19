@@ -52,23 +52,21 @@ public class UpdateScoreboardThread implements Runnable{
 		informations = scoreboard.getObjective("informations");
 		kills = scoreboard.getObjective("kills");
 	}
+
 	@Override
 	public void run() {
-		Bukkit.getScheduler().runTask(PlayUhc.getPlugin(), new Runnable(){
+		Bukkit.getScheduler().runTask(PlayUhc.getPlugin(), () -> {
 
-			@Override
-			public void run() {
-				
-				EraseLastScores();
-				PrintNewScore();
-				try {
-					uhcPlayer.getPlayer().setScoreboard(scoreboard);
-				}catch (UhcPlayerNotOnlineException e) {
-					// No scoreboard for offline players
-				}
-				Bukkit.getScheduler().runTaskLaterAsynchronously(PlayUhc.getPlugin(), task, nextTick);	
-				
-			}});
+			EraseLastScores();
+			PrintNewScore();
+			try {
+				uhcPlayer.getPlayer().setScoreboard(scoreboard);
+			}catch (UhcPlayerNotOnlineException e) {
+				// No scoreboard for offline players
+			}
+			Bukkit.getScheduler().runTaskLaterAsynchronously(PlayUhc.getPlugin(), task, nextTick);
+
+		});
 		
 	}
 	
