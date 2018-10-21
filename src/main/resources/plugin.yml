@@ -1,14 +1,14 @@
-name: PlayUHC
-main: org.uwtech.epix.playuhc.PlayUhc
+name: EpixUHC
+main: org.uwtech.epix.epixuhc.EpixUHC
 version: 1.9.4
 description: Automates UHC games on a dedicated server
 author: val59000mc, Mezy, Roman901
 api-version: 1.13
 commands:
    playuhc:
-        description: "Type '/playuhc help' to see a list of commands"
-        usage: "/playuhc help"
-        permission: "playuhc.commands"
+        description: "Type '/epixuhc help' to see a list of commands"
+        usage: "/epixuhc help"
+        permission: "epixuhc.commands"
         permissionMessage: "You don't have the permission to use PlayUHC commands"
    chat:
         description: "Type '/chat' to toggle global chat"
