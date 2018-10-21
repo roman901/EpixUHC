@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
 
-public class WorldBorderThread implements Runnable{
+public class WorldBorderThread implements Runnable {
 
 	private long timeBeforeShrink;
 	private long timeToShrink;
@@ -31,14 +31,14 @@ public class WorldBorderThread implements Runnable{
 	
 	private void startMoving(){
 		GameManager.getGameManager().broadcastInfoMessage(Lang.GAME_BORDER_START_SHRINKING);
-		
+		GameManager.getGameManager().broadcastInfoMessage(Lang.GAME_BORDER_NETHER_WARNING);
+
 		World overworld = Bukkit.getWorld(GameManager.getGameManager().getConfiguration().getOverworldUuid());
 		WorldBorder overworldBorder = overworld.getWorldBorder();
 		overworldBorder.setSize(2*endSize, timeToShrink);
 		
 		World nether = Bukkit.getWorld(GameManager.getGameManager().getConfiguration().getNetherUuid());
 		WorldBorder netherBorder = nether.getWorldBorder();
-		netherBorder.setSize(endSize, timeToShrink);
+		netherBorder.setSize(0, timeToShrink);
 	}
-
 }

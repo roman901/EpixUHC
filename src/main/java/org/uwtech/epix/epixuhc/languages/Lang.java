@@ -17,10 +17,9 @@ public class Lang {
 	public static String GAME_FINISHED;
 	public static String GAME_END_STOPPED;
 	public static String GAME_SHUTDOWN;
-	public static String GAME_SENDING_TO_HUB;
-	public static String GAME_START_DEATHMATCH;
 	public static String GAME_BORDER_START_SHRINKING;
-	
+	public static String GAME_BORDER_NETHER_WARNING;
+
 
 	public static String PLAYERS_NETHER_OFF;
 	public static String PLAYERS_WELCOME_NEW;
@@ -30,10 +29,8 @@ public class Lang {
 	public static String PLAYERS_WON;
 	public static String PLAYERS_ALL_HAVE_LEFT;
 	public static String PLAYERS_FF_OFF;
-	public static String PLAYERS_SEND_BUNGEE;
 	
 	public static String DISPLAY_MESSAGE_PREFIX;
-	public static String DISPLAY_YOUTUBER_MARK;
 	public static String DISPLAY_MOTD_LOADING;
 	public static String DISPLAY_MOTD_WAITING;
 	public static String DISPLAY_MOTD_STARTING;
@@ -45,7 +42,6 @@ public class Lang {
 	public static String KICK_PLAYING;
 	public static String KICK_ENDED;
 	public static String KICK_DEAD;
-	
 
 	public static String COMMAND_CHAT_GLOBAL;
 	public static String COMMAND_CHAT_TEAM;
@@ -91,7 +87,6 @@ public class Lang {
 	public static String SCOREBOARD_BORDER;
 	public static String SCOREBOARD_TIME;
 	
-	
 	public static String ITEMS_SWORD;
 	public static String ITEMS_BARRIER;
 	public static String ITEMS_REGEN_HEAD;
@@ -112,22 +107,16 @@ public class Lang {
 	public static String ITEMS_CRAFT_BOOK_BACK;
 	public static String ITEMS_CRAFT_BANNED;
 	public static String ITEMS_POTION_BANNED;
-	
 
 	public static String PVP_ENABLED;
 	public static String PVP_START_IN;
-	
-	public static String EVENT_TIME_REWARD;
-	public static String EVENT_KILL_REWARD;
-	public static String EVENT_WIN_REWARD;
-						
 	
 	public Lang(){
 		loadLangConfig();
 	}
 
 	private void loadLangConfig() {
-		File langFile = new File("plugins/PlayUHC/lang.yml");
+		File langFile = new File("plugins/EpixUHC/lang.yml");
 		if(langFile.exists()){
 			FileConfiguration lang = YamlConfiguration.loadConfiguration(langFile);
 			
@@ -144,11 +133,10 @@ public class Lang {
 			GAME_FINISHED = ChatColor.translateAlternateColorCodes('&', lang.getString("game.finished"));
 			GAME_END_STOPPED = ChatColor.translateAlternateColorCodes('&', lang.getString("game.end-stopped"));
 			GAME_SHUTDOWN = ChatColor.translateAlternateColorCodes('&', lang.getString("game.shutdown"));
-			GAME_SENDING_TO_HUB = ChatColor.translateAlternateColorCodes('&', lang.getString("game.sending-to-hub"));
 			GAME_PLEASE_WAIT_TELEPORTING = ChatColor.translateAlternateColorCodes('&', lang.getString("game.please-wait-teleporting"));
-			GAME_START_DEATHMATCH = ChatColor.translateAlternateColorCodes('&', lang.getString("game.start-deathmatch"));
 			GAME_BORDER_START_SHRINKING = ChatColor.translateAlternateColorCodes('&', lang.getString("game.border-start-shrinking"));
-			
+			GAME_BORDER_NETHER_WARNING = ChatColor.translateAlternateColorCodes('&', lang.getString("game.border-nether-warning"));
+
 			// Players
 			PLAYERS_NETHER_OFF = ChatColor.translateAlternateColorCodes('&', lang.getString("players.nether-off"));
 			PLAYERS_WELCOME_NEW = ChatColor.translateAlternateColorCodes('&', lang.getString("players.welcome-new"));
@@ -158,11 +146,9 @@ public class Lang {
 			PLAYERS_WON = ChatColor.translateAlternateColorCodes('&', lang.getString("players.won"));
 			PLAYERS_ALL_HAVE_LEFT = ChatColor.translateAlternateColorCodes('&', lang.getString("players.all-have-left"));
 			PLAYERS_FF_OFF = ChatColor.translateAlternateColorCodes('&', lang.getString("players.ff-off"));
-			PLAYERS_SEND_BUNGEE = ChatColor.translateAlternateColorCodes('&', lang.getString("players.send-bungee"));
-			
+
 			// Display
 			DISPLAY_MESSAGE_PREFIX = ChatColor.translateAlternateColorCodes('&', lang.getString("display.message-prefix"));		
-			DISPLAY_YOUTUBER_MARK = ChatColor.translateAlternateColorCodes('&', lang.getString("display.youtuber-mark"));
 			DISPLAY_MOTD_LOADING  = ChatColor.translateAlternateColorCodes('&', lang.getString("display.motd-loading"));
 			DISPLAY_MOTD_WAITING  = ChatColor.translateAlternateColorCodes('&', lang.getString("display.motd-waiting"));
 			DISPLAY_MOTD_STARTING  = ChatColor.translateAlternateColorCodes('&', lang.getString("display.motd-starting"));
@@ -248,11 +234,6 @@ public class Lang {
 			// PVP
 			PVP_ENABLED = ChatColor.translateAlternateColorCodes('&', lang.getString("pvp.enabled"));
 			PVP_START_IN = ChatColor.translateAlternateColorCodes('&', lang.getString("pvp.start-in"));
-			
-			// Event
-			EVENT_TIME_REWARD = ChatColor.translateAlternateColorCodes('&', lang.getString("event.time-reward"));
-			EVENT_KILL_REWARD = ChatColor.translateAlternateColorCodes('&', lang.getString("event.kill-reward"));
-			EVENT_WIN_REWARD = ChatColor.translateAlternateColorCodes('&', lang.getString("event.win-reward"));
 		}else{
 			try {
 				saveDefaultEnglighLang();
@@ -277,11 +258,10 @@ public class Lang {
 		lang.set("game.finished", "The game is finished !");
 		lang.set("game.end-stopped", "Game ending stopped");
 		lang.set("game.shutdown", "Server will shutdown in %time% seconds.");
-		lang.set("game.sending-to-hub", "Sending you to the lobby");
 		lang.set("game.please-wait-teleporting", "Please wait while all players are being teleported.");
-		lang.set("game.start-deathmatch", "Starting the deathmatch ! Prepare yourself until PVP is enabled !");
 		lang.set("game.border-start-shrinking", "The border will now begin to shrink");
-		
+		lang.set("game.border-nether-warning", "Warning! The border at Nether world will shrink to 0x0!");
+
 		// Players
 		lang.set("players.nether-off", "The nether has been deactivated for this game.");
 		lang.set("players.welcome-new", "Welcome to PlayUHC, please select your team");
@@ -294,8 +274,7 @@ public class Lang {
 		lang.set("players.send-bungee", "Sending you to the hub in %time%");
 
 		// Display
-		lang.set("display.message-prefix", "[PlayUHC]");	
-		lang.set("display.youtuber-mark", "Youtubers cut ! Next cut in 20 min");
+		lang.set("display.message-prefix", "[EpixUHC]");
 		lang.set("display.motd-loading", "Loading ...");
 		lang.set("display.motd-waiting", "Waiting ...");
 		lang.set("display.motd-starting", "Starting");

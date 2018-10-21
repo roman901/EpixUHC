@@ -21,12 +21,7 @@ public class UhcWorldBorder {
 		endSize = cfg.getInt("border.end-size",0);
 		timeToShrink = cfg.getLong("border.time-to-shrink",3600);
 		timeBeforeShrink = cfg.getLong("border.time-before-shrink",0);
-		
-		Bukkit.getLogger().info("[PlayUHC] Border start size is "+startSize);
-		Bukkit.getLogger().info("[PlayUHC] Border end size is "+startSize);
-		Bukkit.getLogger().info("[PlayUHC] Border moves : "+moving);
-		Bukkit.getLogger().info("[PlayUHC] Border timeBeforeENd : "+timeToShrink);
-	}
+			}
 	
 	public boolean getMoving() {
 		return moving;
@@ -37,17 +32,12 @@ public class UhcWorldBorder {
 	
 	
 	public void setUpBukkitBorder(){
-		Bukkit.getScheduler().runTaskLater(EpixUHC.getPlugin(), new Runnable(){
+		Bukkit.getScheduler().runTaskLater(EpixUHC.getPlugin(), () -> {
+			World overworld = Bukkit.getWorld(GameManager.getGameManager().getConfiguration().getOverworldUuid());
+			setBukkitWorldBorderSize(overworld,0,0,2*startSize);
 
-			@Override
-			public void run() {
-				World overworld = Bukkit.getWorld(GameManager.getGameManager().getConfiguration().getOverworldUuid());
-				setBukkitWorldBorderSize(overworld,0,0,2*startSize);
-				
-				World nether = Bukkit.getWorld(GameManager.getGameManager().getConfiguration().getNetherUuid());
-				setBukkitWorldBorderSize(nether,0,0,startSize);
-			}
-			
+			World nether = Bukkit.getWorld(GameManager.getGameManager().getConfiguration().getNetherUuid());
+			setBukkitWorldBorderSize(nether,0,0,startSize);
 		}, 200);
 	}
 	
