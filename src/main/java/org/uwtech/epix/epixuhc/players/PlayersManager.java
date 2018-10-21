@@ -1,5 +1,7 @@
 package org.uwtech.epix.epixuhc.players;
 
+import net.bitjump.bukkit.subwhitelister.util.WhitelistManager;
+import org.bukkit.plugin.Plugin;
 import org.uwtech.epix.epixuhc.EpixUHC;
 import org.uwtech.epix.epixuhc.configuration.MainConfiguration;
 import org.uwtech.epix.epixuhc.customitems.KitsManager;
@@ -31,7 +33,7 @@ public class PlayersManager {
 	List<UhcPlayer> players;
 	
 	public PlayersManager(){
-		players = Collections.synchronizedList(new ArrayList<UhcPlayer>());
+		players = Collections.synchronizedList(new ArrayList<>());
 	}
 	
 	public boolean isPlayerAllowedToJoin(Player player) throws UhcPlayerJoinException {
@@ -42,6 +44,16 @@ public class PlayersManager {
 				throw new UhcPlayerJoinException(GameManager.getGameManager().getMapLoader().getLoadingState()+"% "+ Lang.KICK_LOADING);
 				
 			case WAITING:
+                Plugin subwhitelister = Bukkit.getPluginManager().getPlugin("SubWhitelister");
+                if (subwhitelister != null) {
+                    if (!player.hasPermission("subwhitelister.exempt"))
+                    {
+                        Bukkit.getLogger().info("[EpixUHC] Using SubWhitelister");
+                        if (!WhitelistManager.getUsers().contains(player.getName().toLowerCase())) {
+                            throw new UhcPlayerJoinException(Lang.KICK_NOT_IN_WHITELIST);
+                        }
+                    }
+                }
 				return true;
 				
 			case STARTING:
@@ -56,7 +68,7 @@ public class PlayersManager {
 				}
 			case DEATHMATCH:
 			case PLAYING:
-					try{
+					try {
 						uhcPlayer = getUhcPlayer(player);
 						boolean canSpectate = uhcGM.getConfiguration().getCanSpectateAfterDeath() || player.hasPermission("epixuhc.join-override");
 						if(uhcPlayer != null && ( uhcPlayer.getState().equals(PlayerState.PLAYING) || (canSpectate && uhcPlayer.getState().equals(PlayerState.DEAD))))

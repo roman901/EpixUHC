@@ -42,6 +42,7 @@ public class Lang {
 	public static String KICK_PLAYING;
 	public static String KICK_ENDED;
 	public static String KICK_DEAD;
+	public static String KICK_NOT_IN_WHITELIST;
 
 	public static String COMMAND_CHAT_GLOBAL;
 	public static String COMMAND_CHAT_TEAM;
@@ -161,7 +162,8 @@ public class Lang {
 			KICK_PLAYING = ChatColor.translateAlternateColorCodes('&', lang.getString("kick.playing"));
 			KICK_ENDED = ChatColor.translateAlternateColorCodes('&', lang.getString("kick.ended"));
 			KICK_DEAD = ChatColor.translateAlternateColorCodes('&', lang.getString("kick.dead"));
-			
+            KICK_NOT_IN_WHITELIST = ChatColor.translateAlternateColorCodes('&', lang.getString("kick.not-in-whitelist"));
+
 			// Command
 			COMMAND_CHAT_GLOBAL = ChatColor.translateAlternateColorCodes('&', lang.getString("command.chat-global"));	
 			COMMAND_CHAT_TEAM = ChatColor.translateAlternateColorCodes('&', lang.getString("command.chat-team"));	
@@ -287,7 +289,8 @@ public class Lang {
 		lang.set("kick.playing", "Playing ... You can't join.");
 		lang.set("kick.ended", "Ended ... Please retry in a few minutes.");
 		lang.set("kick.dead", "You are dead !");
-		
+		lang.set("kick.not-in-whitelist", "You are not in whitelist!");
+
 		// Command
 		lang.set("command.chat-global", "You are now talking to everyone");
 		lang.set("command.chat-team", "You are now talking to your team");
