@@ -157,7 +157,7 @@ public class MainConfiguration {
 						PotionEffect effect = new PotionEffect(PotionEffectType.getByName(potionArr[0].toUpperCase()),duration,amplifier);
 						potionList.add(effect);
 					}catch(Exception e){
-						Bukkit.getLogger().warning("[PlayUHC] "+potionStr+" ignored, please check the syntax. It must be formated like POTION_NAME/duration/amplifier");
+						Bukkit.getLogger().warning("[EpixUHC] "+potionStr+" ignored, please check the syntax. It must be formated like POTION_NAME/duration/amplifier");
 					}
 				}
 				potionEffectOnStart = potionList;

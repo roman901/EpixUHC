@@ -246,7 +246,7 @@ public class Lang {
 	}
 
 	private void saveDefaultEnglighLang() throws IOException {
-		File langFile = new File("plugins/PlayUHC/lang.yml");
+		File langFile = new File("plugins/EpixUHC/lang.yml");
 		langFile.createNewFile();
 		FileConfiguration lang = YamlConfiguration.loadConfiguration(langFile);
 		
@@ -260,11 +260,11 @@ public class Lang {
 		lang.set("game.shutdown", "Server will shutdown in %time% seconds.");
 		lang.set("game.please-wait-teleporting", "Please wait while all players are being teleported.");
 		lang.set("game.border-start-shrinking", "The border will now begin to shrink");
-		lang.set("game.border-nether-warning", "Warning! The border at Nether world will shrink to 0x0!");
+		lang.set("game.border-nether-warning", "Warning! The border at Nether world will shrink to 0 0!");
 
 		// Players
 		lang.set("players.nether-off", "The nether has been deactivated for this game.");
-		lang.set("players.welcome-new", "Welcome to PlayUHC, please select your team");
+		lang.set("players.welcome-new", "Welcome to EpixUHC, please select your team");
 		lang.set("players.welcome-back-in-game", "You logged back in the game");
 		lang.set("players.welcome-back-spectating", "You are dead and are now spectating.");
 		lang.set("players.eliminated", "%player% has been eliminated !");

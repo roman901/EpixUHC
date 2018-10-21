@@ -41,7 +41,7 @@ public class CraftsManager {
 	}
 	
 	public static void loadBannedCrafts(){
-		Bukkit.getLogger().info("[PlayUHC] Loading banned crafts list");
+		Bukkit.getLogger().info("[EpixUHC] Loading banned crafts list");
 		bannedCrafts = Collections.synchronizedList(new ArrayList<ItemStack>());
 		
 		FileConfiguration cfg = EpixUHC.getPlugin().getConfig();
@@ -53,10 +53,10 @@ public class CraftsManager {
 					throw new IllegalArgumentException("Couldn't parse "+itemLine+" : Each banned craft should be formatted like ITEM/DATA");
 				}else{
 					bannedCrafts.add(new ItemStack(Material.valueOf(itemData[0]), 1, Short.parseShort(itemData[1])));
-					Bukkit.getLogger().info("[PlayUHC] Banned item "+itemLine+" registered");
+					Bukkit.getLogger().info("[EpixUHC] Banned item "+itemLine+" registered");
 				}
 			}catch(IllegalArgumentException e){
-				Bukkit.getLogger().warning("[PlayUHC] Failed to register "+itemLine+" banned craft");
+				Bukkit.getLogger().warning("[EpixUHC] Failed to register "+itemLine+" banned craft");
 				Bukkit.getLogger().warning(e.getMessage());
 			}
 		}
@@ -64,7 +64,7 @@ public class CraftsManager {
 	}
 	
 	public static void loadCrafts(){
-		Bukkit.getLogger().info("[PlayUHC] Loading custom crafts");
+		Bukkit.getLogger().info("[EpixUHC] Loading custom crafts");
 		crafts = Collections.synchronizedList(new ArrayList<Craft>());
 		FileConfiguration cfg = EpixUHC.getPlugin().getConfig();
 		Set<String> craftsKeys = cfg.getConfigurationSection("customize-game-behavior.add-custom-crafts").getKeys(false);
@@ -78,7 +78,7 @@ public class CraftsManager {
 			
 			try{
 
-				Bukkit.getLogger().info("[PlayUHC] Loading custom craft "+name);
+				Bukkit.getLogger().info("[EpixUHC] Loading custom craft "+name);
 				
 				// Recipe
 				String[] lines = new String[3];
@@ -130,7 +130,7 @@ public class CraftsManager {
 				getCrafts().add(new Craft(name, recipe, craft, limit));
 			}catch(IllegalArgumentException e){
 				//ignore craft if bad formatting
-				Bukkit.getLogger().warning("[PlayUHC] Failed to register "+name+" custom craft : syntax error");
+				Bukkit.getLogger().warning("[EpixUHC] Failed to register "+name+" custom craft : syntax error");
 				Bukkit.getLogger().warning(e.getMessage());
 			}
 			

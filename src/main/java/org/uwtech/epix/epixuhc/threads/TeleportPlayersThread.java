@@ -22,7 +22,7 @@ public class TeleportPlayersThread implements Runnable {
 		for(UhcPlayer uhcPlayer : team.getMembers()){
 			Player player = Bukkit.getPlayer(uhcPlayer.getName());
 			if(player != null){
-				Bukkit.getLogger().info("[PlayUHC] Teleporting "+player.getName());
+				Bukkit.getLogger().info("[EpixUHC] Teleporting "+player.getName());
 				for(PotionEffect effect : GameManager.getGameManager().getConfiguration().getPotionEffectOnStart()){
 					player.addPotionEffect(effect);
 				}

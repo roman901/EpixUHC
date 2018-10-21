@@ -38,14 +38,14 @@ public class MapLoader {
 	
 	public void deleteLastWorld(String uuid){
 		if(uuid == null || uuid.equals("null")){
-			Bukkit.getLogger().info("[PlayUHC] No world to delete");
+			Bukkit.getLogger().info("[EpixUHC] No world to delete");
 		}else{
 			File worldDir = new File(uuid);
 			if(worldDir.exists()){
-				Bukkit.getLogger().info("[PlayUHC] Deleting last world : "+uuid);
+				Bukkit.getLogger().info("[EpixUHC] Deleting last world : "+uuid);
 				deleteFile(worldDir);
 			}else{
-				Bukkit.getLogger().info("[PlayUHC] World "+uuid+" can't me removed, directory not found");
+				Bukkit.getLogger().info("[EpixUHC] World "+uuid+" can't me removed, directory not found");
 			}
 		}
 	}
@@ -80,7 +80,7 @@ public class MapLoader {
 	
 	public void createNewWorld(Environment env){
 		UUID uuid = UUID.randomUUID();
-		Bukkit.getLogger().info("[PlayUHC] Creating new world : "+uuid.toString());
+		Bukkit.getLogger().info("[EpixUHC] Creating new world : "+uuid.toString());
 		
 		GameManager gm = GameManager.getGameManager();
 		WorldCreator wc = new WorldCreator(uuid.toString());
@@ -92,7 +92,7 @@ public class MapLoader {
 			if(gm.getConfiguration().getPickRandomSeedFromList() && !gm.getConfiguration().getSeeds().isEmpty()){
 				Random r = new Random();
 				Long seed = gm.getConfiguration().getSeeds().get(r.nextInt(gm.getConfiguration().getSeeds().size()));
-				Bukkit.getLogger().info("[PlayUHC] Picking random seed from list : "+seed);
+				Bukkit.getLogger().info("[EpixUHC] Picking random seed from list : "+seed);
 				wc.seed(seed);
 			}else if(gm.getConfiguration().getPickRandomWorldFromList() && !gm.getConfiguration().getWorldsList().isEmpty()){
 				Random r = new Random();
@@ -112,7 +112,7 @@ public class MapLoader {
 	public void loadOldWorld(String uuid, Environment env){
 		
 		if(uuid == null || uuid.equals("null")){
-			Bukkit.getLogger().info("[PlayUHC] No world to load, defaulting to default behavior");
+			Bukkit.getLogger().info("[EpixUHC] No world to load, defaulting to default behavior");
 			this.createNewWorld(env);
 		}else{
 			File worldDir = new File(uuid);
@@ -208,12 +208,12 @@ public class MapLoader {
     	
     	final boolean isGenerateVeins = gm.getConfiguration().getEnableGenerateVein() && env.equals(Environment.NORMAL);
     	
-    	Bukkit.getLogger().info("[PlayUHC] Generating environment "+env.toString());
-    	Bukkit.getLogger().info("[PlayUHC] World border set to "+size+" blocks from lobby");
-    	Bukkit.getLogger().info("[PlayUHC] Loading a total "+Math.floor(totalChunksToLoad)+" chunks, up to chunk ( "+maxChunk+" , "+maxChunk+" )");		
-		Bukkit.getLogger().info("[PlayUHC] Resting "+restDuraton+" ticks every "+restEveryTicks+" ticks");
-		Bukkit.getLogger().info("[PlayUHC] Loading up to "+chunksPerTick+" chunks per tick");
-		Bukkit.getLogger().info("[PlayUHC] Loading map "+getLoadingState()+"%");
+    	Bukkit.getLogger().info("[EpixUHC] Generating environment "+env.toString());
+    	Bukkit.getLogger().info("[EpixUHC] World border set to "+size+" blocks from lobby");
+    	Bukkit.getLogger().info("[EpixUHC] Loading a total "+Math.floor(totalChunksToLoad)+" chunks, up to chunk ( "+maxChunk+" , "+maxChunk+" )");
+		Bukkit.getLogger().info("[EpixUHC] Resting "+restDuraton+" ticks every "+restEveryTicks+" ticks");
+		Bukkit.getLogger().info("[EpixUHC] Loading up to "+chunksPerTick+" chunks per tick");
+		Bukkit.getLogger().info("[EpixUHC] Loading map "+getLoadingState()+"%");
 		
 
     	final VeinGenerator veinGenerator = new VeinGenerator();
@@ -257,7 +257,7 @@ public class MapLoader {
 							if(nextRest == 0){
 								delayTask = restDuraton;
 								nextRest = restEveryTicks;
-								String message = "[PlayUHC] Loading map "+getLoadingState()+"% - "+Math.floor(chunksLoaded)+"/"+Math.floor(totalChunksToLoad)+" chunks loaded";
+								String message = "[EpixUHC] Loading map "+getLoadingState()+"% - "+Math.floor(chunksLoaded)+"/"+Math.floor(totalChunksToLoad)+" chunks loaded";
 								if(isGenerateVeins){
 									message+=" - "+veinsGenerated+" veins generated";
 								}
@@ -267,7 +267,7 @@ public class MapLoader {
 							Bukkit.getScheduler().scheduleSyncDelayedTask(EpixUHC.getPlugin(), new RunnableWithParameter(i,j,nextRest),delayTask);
 						}else{
 							chunksLoaded = totalChunksToLoad;
-							Bukkit.getLogger().info("[PlayUHC] Environment "+env.toString()+" 100% loaded");
+							Bukkit.getLogger().info("[EpixUHC] Environment "+env.toString()+" 100% loaded");
 							if(env.equals(Environment.NORMAL))
 								generateChunks(Environment.NETHER);
 							else
