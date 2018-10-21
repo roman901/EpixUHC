@@ -58,7 +58,7 @@ public class PlayersManager {
 			case PLAYING:
 					try{
 						uhcPlayer = getUhcPlayer(player);
-						boolean canSpectate = uhcGM.getConfiguration().getCanSpectateAfterDeath();
+						boolean canSpectate = uhcGM.getConfiguration().getCanSpectateAfterDeath() || player.hasPermission("epixuhc.join-override");
 						if(uhcPlayer != null && ( uhcPlayer.getState().equals(PlayerState.PLAYING) || (canSpectate && uhcPlayer.getState().equals(PlayerState.DEAD))))
 							return true;
 						else
@@ -79,8 +79,6 @@ public class PlayersManager {
 				throw new UhcPlayerJoinException(Lang.KICK_ENDED);
 			
 		}
-		
-		
 
 		return false;
 	}
@@ -368,7 +366,7 @@ public class PlayersManager {
 			}
 			
 			Bukkit.getScheduler().runTaskLater(EpixUHC.getPlugin(), new TeleportPlayersThread(team), delayTeleportByTeam);
-			Bukkit.getLogger().info("[PlayUHC] Teleporting a team in "+delayTeleportByTeam+" ticks");
+			Bukkit.getLogger().info("[EpixUHC] Teleporting a team in "+delayTeleportByTeam+" ticks");
 			delayTeleportByTeam += 20; // ticks
 		}
 		
