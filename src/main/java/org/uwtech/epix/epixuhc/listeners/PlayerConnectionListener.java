@@ -57,9 +57,6 @@ public class PlayerConnectionListener implements Listener{
 
 	}
 
-
-
-
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onPlayerDisconnect(PlayerQuitEvent event){
 			if(getKickedPlayersWhileJoining().contains(event.getPlayer().getName())){

@@ -125,6 +125,12 @@ public class UhcPlayer {
 				
 			try {
 				Player player = uhcPlayer.getPlayer();
+				StringBuilder teamName = new StringBuilder();
+				for (UhcPlayer tPlayer : uhcPlayer.getTeam().getMembers()) {
+					teamName.append(tPlayer.getName().charAt(0));
+				}
+
+				player.setDisplayName("["+teamName.toString()+"] "+player.getName());
 				health.getScore(uhcPlayer.getName()).setScore(20);
 				if(uhcPlayer.isInTeamWith(this))
 					friends.addEntry(player.getName());
@@ -134,18 +140,12 @@ public class UhcPlayer {
 				// No team for offline players
 			}
 		}
-		
-	
-	
+
 		try {
 			getPlayer().setScoreboard(scoreboard);
 		}catch (UhcPlayerNotOnlineException e) {
 			// No scoreboard for offline players
 		}
-	}
-	
-	public void updateScoreboard(){
-		
 	}
 	
 	public boolean isInTeamWith(UhcPlayer player){
@@ -213,10 +213,6 @@ public class UhcPlayer {
 				sendMessage(ChatColor.RED+ Lang.TEAM_PLAYER_NOT_ONLINE.replace("%player%", pointed.getName()));
 			}
 		}
-		
-	}
-	public void compassSpectatingNextTeammate() {
-		// TODO Auto-generated method stub
 		
 	}
 	

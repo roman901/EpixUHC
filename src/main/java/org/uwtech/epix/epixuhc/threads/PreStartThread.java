@@ -47,55 +47,42 @@ public class PreStartThread implements Runnable{
 	
 	@Override
 	public void run() {
-		
-		Bukkit.getScheduler().runTask(EpixUHC.getPlugin(), new Runnable(){
-
-			@Override
-			public void run() {
-				
-				GameManager gm = GameManager.getGameManager();
-				List<UhcTeam> teams = gm.getPlayersManager().listUhcTeams();
-				double readyTeams = 0;
-				double teamsNumber = (double) teams.size();
-				for(UhcTeam team : teams){
-					if(team.isReadyToStart() && team.isOnline())
-						readyTeams+=1;
-				}
-				
-				double percentageReadyTeams = 100*readyTeams/teamsNumber;
-				int playersNumber = Bukkit.getOnlinePlayers().size();
-				
-				if(force || (!pause && (remainingTime < 5 || (playersNumber >= minPlayers && readyTeams >= gm.getConfiguration().getMinimalReadyTeamsToStart() && percentageReadyTeams >= gm.getConfiguration().getMinimalReadyTeamsPercentageToStart())))){
-						if(remainingTime == timeBeforeStart+1){
-							gm.broadcastInfoMessage(Lang.GAME_ENOUGH_TEAMS_READY);
-							gm.broadcastInfoMessage(Lang.GAME_STARTING_IN.replace("%time%", ""+ TimeUtils.getFormattedTime(remainingTime)));
-							gm.getPlayersManager().playSoundToAll(UHCSound.CLICK);
-						}else if((remainingTime > 0 && remainingTime <= 10) || (remainingTime > 0 && remainingTime%10 == 0)){
-							gm.broadcastInfoMessage(Lang.GAME_STARTING_IN.replace("%time%", ""+remainingTime));
-							gm.getPlayersManager().playSoundToAll(UHCSound.CLICK);
-						}
-						
-						remainingTime--;
-						
-						if(remainingTime == -1)
-							Bukkit.getScheduler().runTask(EpixUHC.getPlugin(), new Runnable(){
-
-								@Override
-								public void run() {
-									GameManager.getGameManager().startGame();
-								}
-							});
-						else		
-							Bukkit.getScheduler().runTaskLaterAsynchronously(EpixUHC.getPlugin(), task,20);
-				}else{
-					if(pause == false && remainingTime < timeBeforeStart+1){
-						gm.broadcastInfoMessage(Lang.GAME_STARTING_CANCELLED);
-					}
-					remainingTime = timeBeforeStart+1;
-					Bukkit.getScheduler().runTaskLaterAsynchronously(EpixUHC.getPlugin(), task,20);
-				}
+		Bukkit.getScheduler().runTask(EpixUHC.getPlugin(), () -> {
+			GameManager gm = GameManager.getGameManager();
+			List<UhcTeam> teams = gm.getPlayersManager().listUhcTeams();
+			double readyTeams = 0;
+			double teamsNumber = (double) teams.size();
+			for(UhcTeam team : teams){
+				if(team.isReadyToStart() && team.isOnline())
+					readyTeams+=1;
 			}
-			
+
+			double percentageReadyTeams = 100*readyTeams/teamsNumber;
+			int playersNumber = Bukkit.getOnlinePlayers().size();
+
+			if(force || (!pause && (remainingTime < 5 || (playersNumber >= minPlayers && readyTeams >= gm.getConfiguration().getMinimalReadyTeamsToStart() && percentageReadyTeams >= gm.getConfiguration().getMinimalReadyTeamsPercentageToStart())))){
+					if(remainingTime == timeBeforeStart+1){
+						gm.broadcastInfoMessage(Lang.GAME_ENOUGH_TEAMS_READY);
+						gm.broadcastInfoMessage(Lang.GAME_STARTING_IN.replace("%time%", ""+ TimeUtils.getFormattedTime(remainingTime)));
+						gm.getPlayersManager().playSoundToAll(UHCSound.CLICK);
+					}else if((remainingTime > 0 && remainingTime <= 10) || (remainingTime > 0 && remainingTime%10 == 0)){
+						gm.broadcastInfoMessage(Lang.GAME_STARTING_IN.replace("%time%", ""+remainingTime));
+						gm.getPlayersManager().playSoundToAll(UHCSound.CLICK);
+					}
+
+					remainingTime--;
+
+					if(remainingTime == -1)
+						Bukkit.getScheduler().runTask(EpixUHC.getPlugin(), () -> GameManager.getGameManager().startGame());
+					else
+						Bukkit.getScheduler().runTaskLaterAsynchronously(EpixUHC.getPlugin(), task,20);
+			}else{
+				if(!pause && remainingTime < timeBeforeStart+1){
+					gm.broadcastInfoMessage(Lang.GAME_STARTING_CANCELLED);
+				}
+				remainingTime = timeBeforeStart+1;
+				Bukkit.getScheduler().runTaskLaterAsynchronously(EpixUHC.getPlugin(), task,20);
+			}
 		});
 		
 	}

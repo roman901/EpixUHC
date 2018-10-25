@@ -268,7 +268,7 @@ public class GameManager {
 		nether.setGameRule(GameRule.SEND_COMMAND_FEEDBACK, false);
 		nether.setDifficulty(Difficulty.HARD);
 
-		lobby = new Lobby(new Location(overworld, 0, 200, 0), Material.GLASS);
+		lobby = new Lobby(new Location(overworld, 0, 200, 0), Material.BARRIER);
 		lobby.build();
 		lobby.loadLobbyChunks();
 
@@ -294,7 +294,6 @@ public class GameManager {
 			getPlayersManager().setAllPlayersEndGame();
 			Bukkit.getScheduler().scheduleSyncDelayedTask(EpixUHC.getPlugin(), new StopRestartThread(),20);
 		}
-
 	}
 
 	public void startEndGameThread() {

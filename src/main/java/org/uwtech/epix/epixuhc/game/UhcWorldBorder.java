@@ -34,10 +34,10 @@ public class UhcWorldBorder {
 	public void setUpBukkitBorder(){
 		Bukkit.getScheduler().runTaskLater(EpixUHC.getPlugin(), () -> {
 			World overworld = Bukkit.getWorld(GameManager.getGameManager().getConfiguration().getOverworldUuid());
-			setBukkitWorldBorderSize(overworld,0,0,2*startSize);
+			setBukkitWorldBorderSize(overworld, 0, 0, 2*startSize);
 
 			World nether = Bukkit.getWorld(GameManager.getGameManager().getConfiguration().getNetherUuid());
-			setBukkitWorldBorderSize(nether,0,0,startSize);
+			setBukkitWorldBorderSize(nether, 0, 0, 2*startSize);
 		}, 200);
 	}
 	
